@@ -3,3 +3,10 @@
 # ==========================================================
 #docs/  
 docs/kisisel_notlar.md
+
+# Eclipse dosyaları
+bin/
+*.class
+.classpath
+.project
+.settings/
