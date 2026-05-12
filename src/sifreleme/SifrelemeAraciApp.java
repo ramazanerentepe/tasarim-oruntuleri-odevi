@@ -2,7 +2,6 @@ package sifreleme;
 
 import java.security.*;
 import java.util.Base64;
-import java.util.Scanner;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -69,9 +68,8 @@ public class SifrelemeAraciApp {
     }
 
     private String padAnahtar(String anahtar) {
-        // TODO
-    }
-
+		return String.format("%-16s", anahtar).substring(0, 16);
+	}
     public static void main(String[] args) {
         // TODO
     }
