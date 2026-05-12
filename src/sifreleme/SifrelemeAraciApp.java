@@ -2,6 +2,7 @@ package sifreleme;
 
 import java.security.*;
 import java.util.Base64;
+import java.util.Scanner;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -71,6 +72,34 @@ public class SifrelemeAraciApp {
 		return String.format("%-16s", anahtar).substring(0, 16);
 	}
     public static void main(String[] args) {
-        // TODO
+        Scanner scanner = new Scanner(System.in);
+		System.out.println("Şifreleme Aracı");
+		while (true) { 
+			System.out.println("Algoritma seçin (AES, RSA, BASE64) veya cikis için 'cikis':");
+			String algoritma = scanner.nextLine();
+			if(algoritma.equals("cikis")){
+				System.out.println("Çıkış yapılıyor...");
+				break;
+			}
+			String anahtar = "";
+			if (algoritma.equals("AES")) {
+				System.out.println("Anahtar girin (16 karakter):");
+				anahtar = scanner.nextLine();
+			}
+			SifrelemeAraciApp arac = new SifrelemeAraciApp(algoritma, anahtar);
+			System.out.println("Islem seciniz (1: Sifrele / 2: Coz):");
+			String islem = scanner.nextLine();
+			System.out.println("Metin girin:");
+			String metin = scanner.nextLine();
+			if (islem.equals("1")) {
+				 System.out.println("Sonuc: " + arac.sifrele(metin));
+			}else if (islem.equals("2")){
+				System.out.println("Sonuc: " + arac.coz(metin));
+			}else{
+				System.out.println("Hata: Geçersiz işlem seçimi.");
+				continue;
+			}
+		}
+		scanner.close();
     }
 }
