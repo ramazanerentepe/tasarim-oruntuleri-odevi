@@ -43,7 +43,29 @@ public class SifrelemeAraciApp {
     }
 
     public String coz(String sifreliMetin) {
-        // TODO
+        try {
+			if (algoritma.equals("AES")){
+				SecretKeySpec secretKey = new SecretKeySpec(padAnahtar(anahtar).getBytes(), "AES");
+				Cipher cipher = Cipher.getInstance("AES");
+				cipher.init(Cipher.DECRYPT_MODE, secretKey);
+				byte[] cozulmusBytes = cipher.doFinal(Base64.getDecoder().decode(sifreliMetin));
+				return new String(cozulmusBytes);
+			}else if (algoritma.equals("RSA")){
+				KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+				kpg.initialize(2048);
+				KeyPair kp = kpg.generateKeyPair();
+				Cipher cipher = Cipher.getInstance("RSA");
+				cipher.init(Cipher.DECRYPT_MODE, kp.getPrivate());
+				byte[] cozulmusBytes = cipher.doFinal(Base64.getDecoder().decode(sifreliMetin));
+				return new String(cozulmusBytes);
+			}else if (algoritma.equals("BASE64")){
+				return new String(Base64.getDecoder().decode(sifreliMetin));
+			}else{
+				return "HATA: Bilinmeyen algoritma.";
+			}
+		} catch (Exception e) {
+			return "Hata: " + e.getMessage();
+		}
     }
 
     private String padAnahtar(String anahtar) {
