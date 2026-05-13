@@ -63,3 +63,40 @@
 >
 > Polimorfik bir hiyerarşi kurulsaydı her alt tip üst tipin sözleşmesini güvenle yerine getirir,
 > bu tür hatalar derleme aşamasında yakalanırdı.
+
+---
+
+## AI Karşılaştırması
+
+### Kullandığım Prompt
+
+> Bu kodda hangi tasarım sorunlarını görüyorsun?
+>
+> Hangi tasarım örüntüleri bu sorunları çözebilir?
+>
+> Her sorun için kısa bir açıklama yaz.
+
+### Claude Ne Buldu?
+
+> Claude aşağıdaki sorunları tespit etti:
+>
+> 1.  God Class
+> 2.  Kod Tekrarı
+> 3.  RSA Anahtar Yönetimi Hatası
+> 4.  If-Else Zinciri ile Algoritma Seçimi
+> 5.  Constructor'da Sabit Kodlanmış Algoritma
+> 6.  String Tabanlı Tip Güvenliği Yok
+> 7.  **Hata Yönetimi Gizleniyor** — `catch` bloklarının exception'ı `String`olarak döndürmesi; çağıran kodun başarı ile hatayı ayırt edememesi.
+
+### Ben Ne Buldum?
+
+> İlk 6 sorunu bağımsız olarak tespit ettim. Claude ile örtüşen noktalar
+> God Class, Kod Tekrarı, RSA hatası, if-else zinciri ve constructor
+> sabitlemesiydi.
+
+### Fark
+
+> Hata yönetimi sorununu gözden kaçırdım. `catch` bloğunun `String` döndürmesi
+> yüzeysel bakışta işlevsel görünüyor; ancak çağıran tarafın dönüş değerini
+> parse etmeden hata tespiti yapamaması ciddi bir tasarım açığı.
+> Bu noktayı Claude fark ettirdi, kendi analizimde yer vermemiştim.
