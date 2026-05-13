@@ -1,11 +1,12 @@
 package sifreleme;
 
+import java.util.Base64;
+
 public class Base64Sifreleyici implements Sifreleyici{
 
 	@Override
 	public String sifrele(String metin) {
-		// TODO Auto-generated method stub
-		return null;
+		return Base64.getEncoder().encodeToString(metin.getBytes());
 	}
 
 	@Override
