@@ -2,7 +2,6 @@ package sifreleme;
 
 import java.util.Base64;
 import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AesSifreleyici implements Sifreleyici{
@@ -15,7 +14,7 @@ public class AesSifreleyici implements Sifreleyici{
 	@Override
 	public String sifrele(String metin) {
 		try {
-            SecretKeySpec secretKey = new SecretKeySpec(padAnahtar.getBytes(), "AES");
+            SecretKeySpec secretKey = new SecretKeySpec(padAnahtar(anahtar).getBytes(), "AES");
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             byte[] sifreliBytes = cipher.doFinal(metin.getBytes()); 
@@ -29,7 +28,7 @@ public class AesSifreleyici implements Sifreleyici{
 	@Override
 	public String coz(String sifreliMetin) {
 		try {
-            SecretKeySpec secretKey = new SecretKeySpec(padAnahtar.getBytes(), "AES");
+            SecretKeySpec secretKey = new SecretKeySpec(padAnahtar(anahtar).getBytes(), "AES");
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             byte[] sifreliBytes = Base64.getDecoder().decode(sifreliMetin);
@@ -40,5 +39,9 @@ public class AesSifreleyici implements Sifreleyici{
             return "Hata: " + e.getMessage();
         }
 	}
+
+    private String padAnahtar(String anahtar){
+        return String.format("%-16s", anahtar).substring(0, 16);
+    }
 
 }
