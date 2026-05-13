@@ -11,8 +11,7 @@ public class Base64Sifreleyici implements Sifreleyici{
 
 	@Override
 	public String coz(String sifreliMetin) {
-		// TODO Auto-generated method stub
-		return null;
+		return new String(Base64.getDecoder().decode(sifreliMetin));
 	}
 
 }
