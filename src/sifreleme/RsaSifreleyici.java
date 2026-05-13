@@ -2,6 +2,8 @@ package sifreleme;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.util.Base64;
+import javax.crypto.Cipher;
 
 public class RsaSifreleyici implements Sifreleyici {
 
@@ -31,6 +33,13 @@ public class RsaSifreleyici implements Sifreleyici {
 
     @Override
     public String coz(String sifreliMetin) {
-        return null;
+        try{
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.DECRYPT_MODE, rsaKeyPair.getPrivate());
+			byte[] cozulmusBytes = cipher.doFinal(Base64.getDecoder().decode(sifreliMetin));
+			return new String(cozulmusBytes, "UTF-8");
+		} catch (Exception e) {
+			return "Hata:" + e.getMessage();
+		}
     }
 }
