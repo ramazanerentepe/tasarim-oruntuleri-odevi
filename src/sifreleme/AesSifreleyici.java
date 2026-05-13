@@ -28,8 +28,17 @@ public class AesSifreleyici implements Sifreleyici{
 
 	@Override
 	public String coz(String sifreliMetin) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+            SecretKeySpec secretKey = new SecretKeySpec(padAnahtar.getBytes(), "AES");
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            byte[] sifreliBytes = Base64.getDecoder().decode(sifreliMetin);
+            byte[] cozulmusBytes = cipher.doFinal(sifreliBytes);
+            return new String(cozulmusBytes);
+
+        } catch (Exception e) {
+            return "Hata: " + e.getMessage();
+        }
 	}
 
 }
