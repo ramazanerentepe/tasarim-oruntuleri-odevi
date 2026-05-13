@@ -19,7 +19,14 @@ public class RsaSifreleyici implements Sifreleyici {
 
     @Override
     public String sifrele(String metin) {
-        return null;
+        try {
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.ENCRYPT_MODE, rsaKeyPair.getPublic());
+			byte[] sifreliBytes = cipher.doFinal(metin.getBytes("UTF-8"));
+			return Base64.getEncoder().encodeToString(sifreliBytes);
+		} catch (Exception e) {
+			return "Hata:" + e.getMessage();
+		}
     }
 
     @Override
