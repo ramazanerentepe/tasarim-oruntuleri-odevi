@@ -4,8 +4,7 @@ public class Base64Factory implements SifreleyiciFactory{
 
 	@Override
 	public Sifreleyici olustur() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Base64Sifreleyici();
 	}
 
 }
