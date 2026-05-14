@@ -13,13 +13,36 @@ public class SifrelemeAraciApp {
 				System.out.println("Çıkış yapılıyor...");
 				break;
 			}
-			// TODO: factory ile seçilen algoritmaya göre şifreleme aracı oluşturuluyor
+
+			SifreleyiciFactory factory = null;
+
+			if(algoritma.equals("AES")){
+				System.out.println("Anahtar girin:");
+				String anahtar = scanner.nextLine();
+				factory = new AesFactory(anahtar);
+			} else if(algoritma.equals("RSA")){
+				factory = new RsaFactory();
+			} else if(algoritma.equals("BASE64")){
+				factory = new Base64Factory();
+			} else {
+				System.out.println("Geçersiz algoritma seçimi. Lütfen tekrar deneyin.");
+				continue; // Geçersiz seçim durumunda döngünün başına dön
+			}
 			System.out.println("Islem seciniz (1: Sifrele / 2: Coz):");
 			String islem = scanner.nextLine();
 
 			System.out.println("Metin girin:");
             String metin = scanner.nextLine();
-			// TODO : Seçilen algoritmaya göre şifreleme veya çözme işlemi yapılacak
+			
+			Sifreleyici sifreleyici = factory.olustur();
+
+			if (islem.equals("1")){
+				System.out.println("Şifrelenmiş metin: " + sifreleyici.sifrele(metin));
+			}else if (islem.equals("2")){
+				System.out.println("Çözülmüş metin: " + sifreleyici.coz(metin));
+			} else {
+				System.out.println("Geçersiz işlem seçimi.");
+			}
 		}
 		scanner.close();
     }
