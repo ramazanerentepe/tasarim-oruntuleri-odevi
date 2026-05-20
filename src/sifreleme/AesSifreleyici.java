@@ -22,7 +22,7 @@ public class AesSifreleyici implements Sifreleyici{
             return Base64.getEncoder().encodeToString(sifreliBytes);
 
         } catch (Exception e) {
-            return "Hata: " + e.getMessage();
+            throw new SifrelemeException("AES şifreleme sırasında hata oluştu", e);
         }
 	}
 
@@ -37,7 +37,7 @@ public class AesSifreleyici implements Sifreleyici{
             return new String(cozulmusBytes , StandardCharsets.UTF_8);
 
         } catch (Exception e) {
-            return "Hata: " + e.getMessage();
+            throw new SifrelemeException("AES çözme sırasında hata oluştu", e);
         }
 	}
 
