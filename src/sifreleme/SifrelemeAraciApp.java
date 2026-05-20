@@ -35,14 +35,18 @@ public class SifrelemeAraciApp {
             String metin = scanner.nextLine();
 			
 			Sifreleyici sifreleyici = factory.olustur();
-
-			if (islem.equals("1")){
-				System.out.println("Şifrelenmiş metin: " + sifreleyici.sifrele(metin));
-			}else if (islem.equals("2")){
-				System.out.println("Çözülmüş metin: " + sifreleyici.coz(metin));
-			} else {
-				System.out.println("Geçersiz işlem seçimi.");
+			try {
+				if (islem.equals("1")){
+					System.out.println("Şifrelenmiş metin: " + sifreleyici.sifrele(metin));
+				}else if (islem.equals("2")){
+					System.out.println("Çözülmüş metin: " + sifreleyici.coz(metin));
+				} else {
+					System.out.println("Geçersiz işlem seçimi.");
+				}
+			} catch (SifrelemeException e) {
+				System.out.println("İşlem sırasında hata oluştu: " + e.getMessage());
 			}
+
 		}
 		scanner.close();
     }
