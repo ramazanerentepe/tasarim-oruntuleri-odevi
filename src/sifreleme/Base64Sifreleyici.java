@@ -12,7 +12,11 @@ public class Base64Sifreleyici implements Sifreleyici{
 
 	@Override
 	public String coz(String sifreliMetin) {
-		return new String(Base64.getDecoder().decode(sifreliMetin) ,StandardCharsets.UTF_8);
+		try {
+			return new String(Base64.getDecoder().decode(sifreliMetin) ,StandardCharsets.UTF_8);
+		} catch (Exception e) {
+			throw new SifrelemeException("Base64 çözme sırasında hata oluştu", e);
+		}
+		
 	}
-
 }
