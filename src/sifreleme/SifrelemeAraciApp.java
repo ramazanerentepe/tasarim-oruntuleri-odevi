@@ -35,6 +35,14 @@ public class SifrelemeAraciApp {
             String metin = scanner.nextLine();
 			
 			Sifreleyici sifreleyici = factory.olustur();
+
+			System.out.println("Metin işlemden önce sıkıştırılsın mı? (E/H):");
+			String sikistirmaSecimi = scanner.nextLine().toUpperCase();
+
+			if (sikistirmaSecimi.equals("E")) {
+				sifreleyici = new SikistirmaDecorator(sifreleyici);
+			}
+
 			try {
 				if (islem.equals("1")){
 					System.out.println("Şifrelenmiş metin: " + sifreleyici.sifrele(metin));
