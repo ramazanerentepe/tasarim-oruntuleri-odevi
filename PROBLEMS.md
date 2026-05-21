@@ -126,3 +126,19 @@
 > `sifrele()` ve `coz()` metotları içinde `getBytes("UTF-8")` ve `new String(..., "UTF-8")` çağrıları string literal halinde bırakılmış.
 >
 > Diğer sınıflar `StandardCharsets.UTF_8` standardına geçmişken bu sınıfın eski stilde kalması mimari tutarlılığı bozmuştur.
+
+---
+
+# Sorunların Kapanış Durumu
+
+| Sorun                                     | Kapandığı Faz | Uygulanan Çözüm                                   |
+| ----------------------------------------- | ------------- | ------------------------------------------------- |
+| God Class                                 | Faz 1 + Faz 3 | Factory (nesne üretimi) + Command (işlem mantığı) |
+| Kod Tekrarı                               | Faz 1         | Her algoritma kendi sınıfına taşındı              |
+| RSA Anahtar Yönetimi Hatası               | Faz 1         | `KeyPair` constructor'da bir kez üretilir         |
+| If-Else Zinciri ile Algoritma Seçimi      | Faz 3         | `Map<String, IslemCommand>` dispatch              |
+| Constructor'da Sabit Kodlanmış Algoritma  | Faz 1         | Factory Method ile runtime seçimi                 |
+| String Tabanlı Tip Güvenliği Yok          | Faz 1         | `Sifreleyici` arayüzü ile polimorfik yapı         |
+| Hata Yönetimi Gizleniyor                  | Faz 2         | `SifrelemeException` ile merkezi yönetim          |
+| Platform Bağımlılığı (AES/Base64 Charset) | Faz 2         | `StandardCharsets.UTF_8`                          |
+| RSA Charset Tutarsızlığı                  | Faz 3         | `StandardCharsets.UTF_8`                          |
