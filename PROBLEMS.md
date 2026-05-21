@@ -112,3 +112,17 @@
 > `sifrele()` ve `coz()` metotları içinde `getBytes()` ve `new String()` fonksiyonları çağrılırken karakter kümesi (charset) belirtilmemiş.
 > Bu hatamız projemizin çalıştırıldığı işletim sisteminin varsayılan dil kodlamasına bağımlı olmasına sebep oluyor.
 > Buda bize windowsta şifrelediğimiz bir metnin Linux'ta veya farklı bir dil bilğiasayarda çözülememesi demek oluyor.
+
+---
+
+# Üçüncü Kod Analizi (Faz-2-Sonrası)
+
+> Burada proje ilerleyen aşamalarında `(faz-3 e geçerken)` farkedilen hatalar bulunmaktadır.
+
+## RSA Charset Tutarsızlığı | Güvenilirlik ve Tutarlılık Sorunu
+
+> Faz-2 kapanışında AES ve Base64 sınıflarındaki karakter seti hatası düzeltilirken `RsaSifreleyici` gözden kaçırılmış.
+>
+> `sifrele()` ve `coz()` metotları içinde `getBytes("UTF-8")` ve `new String(..., "UTF-8")` çağrıları string literal halinde bırakılmış.
+>
+> Diğer sınıflar `StandardCharsets.UTF_8` standardına geçmişken bu sınıfın eski stilde kalması mimari tutarlılığı bozmuştur.
