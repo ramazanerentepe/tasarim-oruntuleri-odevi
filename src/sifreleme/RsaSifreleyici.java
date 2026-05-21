@@ -15,7 +15,7 @@ public class RsaSifreleyici implements Sifreleyici {
 			kpg.initialize(2048);
 			this.rsaKeyPair = kpg.generateKeyPair();
 		} catch (Exception e) {
-			throw new RuntimeException("RSA anahtar çifti oluşturulurken hata oluştu: " + e.getMessage(), e);
+			throw new SifrelemeException("RSA anahtar çifti oluşturulurken hata oluştu: " + e.getMessage(), e);
 		}
     }
 
@@ -27,7 +27,7 @@ public class RsaSifreleyici implements Sifreleyici {
 			byte[] sifreliBytes = cipher.doFinal(metin.getBytes("UTF-8"));
 			return Base64.getEncoder().encodeToString(sifreliBytes);
 		} catch (Exception e) {
-			return "Hata:" + e.getMessage();
+			throw new SifrelemeException("RSA şifreleme sırasında hata oluştu: " + e.getMessage(), e);
 		}
     }
 
@@ -39,7 +39,7 @@ public class RsaSifreleyici implements Sifreleyici {
 			byte[] cozulmusBytes = cipher.doFinal(Base64.getDecoder().decode(sifreliMetin));
 			return new String(cozulmusBytes, "UTF-8");
 		} catch (Exception e) {
-			return "Hata:" + e.getMessage();
+			throw new SifrelemeException("RSA çözme sırasında hata oluştu: " + e.getMessage(), e);
 		}
     }
 }
