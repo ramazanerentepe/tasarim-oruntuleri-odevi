@@ -1,5 +1,6 @@
 package sifreleme;
 
+import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.util.Base64;
@@ -24,7 +25,7 @@ public class RsaSifreleyici implements Sifreleyici {
         try {
 			Cipher cipher = Cipher.getInstance("RSA");
 			cipher.init(Cipher.ENCRYPT_MODE, rsaKeyPair.getPublic());
-			byte[] sifreliBytes = cipher.doFinal(metin.getBytes("UTF-8"));
+			byte[] sifreliBytes = cipher.doFinal(metin.getBytes(StandardCharsets.UTF_8));
 			return Base64.getEncoder().encodeToString(sifreliBytes);
 		} catch (Exception e) {
 			throw new SifrelemeException("RSA şifreleme sırasında hata oluştu: " + e.getMessage(), e);
@@ -37,7 +38,7 @@ public class RsaSifreleyici implements Sifreleyici {
 			Cipher cipher = Cipher.getInstance("RSA");
 			cipher.init(Cipher.DECRYPT_MODE, rsaKeyPair.getPrivate());
 			byte[] cozulmusBytes = cipher.doFinal(Base64.getDecoder().decode(sifreliMetin));
-			return new String(cozulmusBytes, "UTF-8");
+			return new String(cozulmusBytes, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			throw new SifrelemeException("RSA çözme sırasında hata oluştu: " + e.getMessage(), e);
 		}
